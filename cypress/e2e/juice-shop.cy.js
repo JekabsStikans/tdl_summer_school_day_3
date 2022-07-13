@@ -161,9 +161,10 @@ describe("Juice-shop with Auto login", () => {
     // Select a product card - Raspberry Juice (1000ml)
     HomePage.findCardByItemName("Raspberry Juice (1000ml)").click();
     // Type in review - "Tastes like metal"
-    HomePage.popUpDialogReviewInput.click().type("Tastes like metal");
-    // Click Submit
-    HomePage.submitButton.click();
+    HomePage.popUpDialogReviewInput.click().type("Tastes like metal").then( () => {
+      // Click Submit
+      HomePage.submitButton.click();
+    });
     // Click expand reviews button/icon (wait for reviews to appear)
     cy.wait(500);
     HomePage.popUpDialogReviewDropdownBtn.click();
