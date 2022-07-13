@@ -76,6 +76,14 @@ class HomePage extends BasePage {
   static get navbarBasketBtn(){
     return cy.get('[aria-label="Show the shopping cart"]');
   }
+  
+  static get ordersAndPaymentBtn(){
+    return cy.get('.mat-menu-content > [aria-label="Show Orders and Payment Menu"]');
+  }
+  
+  static get savedAddressesBtn(){
+    return cy.get('.mat-menu-content > [aria-label="Go to saved address page"]');
+  }
 }
 
 export default HomePage;

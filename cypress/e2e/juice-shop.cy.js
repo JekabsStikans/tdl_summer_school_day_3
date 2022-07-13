@@ -1,4 +1,5 @@
 import BasketPage from "../pageObjects/BasketPage";
+import CreateAddressPage from "../pageObjects/CreateAddressPage";
 import DeliveryMethodPage from "../pageObjects/DeliveryMethodPage";
 import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
@@ -6,6 +7,7 @@ import OrderCompletionPage from "../pageObjects/OrderCompletionPage";
 import OrderSummaryPage from "../pageObjects/OrderSummaryPage";
 import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
+import SavedAddressesPage from "../pageObjects/SavedAddressesPage";
 import SelectAddressPage from "../pageObjects/SelectAddressPage";
 
 
@@ -191,7 +193,7 @@ describe("Juice-shop with Auto login", () => {
 
 
   // Create scenario - Buy Girlie T-shirt
-  it.only("Buy a t-shirt", () => {
+  it("Buy a t-shirt", () => {
     // Click on search icon
     HomePage.searchQueryBtn.click();
     // Search for Girlie
@@ -229,22 +231,37 @@ describe("Juice-shop with Auto login", () => {
     
     // Create page object - OrderCompletionPage
     // Validate confirmation - "Thank you for your purchase!"
-    OrderCompletionPage.completionCard.contains("Thank you for your purchase!").should("exist");
+    cy.contains("Thank you for your purchase!").should("exist");
     
   });
 
 
-  it("Search", () => {
   // Create scenario - Add address
-  // Click on Account
-  // Click on Orders & Payment
-  // Click on My saved addresses
-  // Create page object - SavedAddressesPage
-  // Click on Add New Address
-  // Create page object - CreateAddressPage
-  // Fill in the necessary information
-  // Click Submit button
-  // Validate that previously added address is visible
+  it.only("Add a new address", () => {
+    // Click on Account
+    HomePage.navbarAccountBtn.click();
+    // Click on Orders & Payment
+    HomePage.ordersAndPaymentBtn.click();
+    // Click on My saved addresses
+    HomePage.savedAddressesBtn.click();
+
+    // Create page object - SavedAddressesPage
+    // Click on Add New Address
+    SavedAddressesPage.addNewAddressBtn.click();
+
+    // Create page object - CreateAddressPage
+    // Fill in the necessary information
+    CreateAddressPage.countryInput.type("Imagistan");
+    CreateAddressPage.nameInput.type("Demo");
+    CreateAddressPage.mobileNumberInput.type("123435678");
+    CreateAddressPage.ZIPcodeInput.type("9999");
+    CreateAddressPage.addressInput.type("Dummy street 33");
+    CreateAddressPage.cityInput.type("Big town");
+    CreateAddressPage.stateInput.type("Region of exist");
+    CreateAddressPage.submitButton.click();
+    // Click Submit button
+    // Validate that previously added address is visible
+    SavedAddressesPage.addressesList.contains("Dummy street 33").should("exist");
   });
 
 
