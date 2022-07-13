@@ -164,12 +164,12 @@ describe("Juice-shop with Auto login", () => {
     HomePage.popUpDialogReviewInput.click().type("Tastes like metal").then( () => {
       // Click Submit
       HomePage.submitButton.click();
+      // Click expand reviews button/icon (wait for reviews to appear)
+      cy.wait(500);
+      HomePage.popUpDialogReviewDropdownBtn.click();
+      // Validate review -  "Tastes like metal"
+      HomePage.popUpDialogReviewDropdownList.contains("Tastes like metal").should("exist");
     });
-    // Click expand reviews button/icon (wait for reviews to appear)
-    cy.wait(500);
-    HomePage.popUpDialogReviewDropdownBtn.click();
-    // Validate review -  "Tastes like metal"
-    HomePage.popUpDialogReviewDropdownList.contains("Tastes like metal").should("exist");
   });
 
 
