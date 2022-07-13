@@ -33,12 +33,48 @@ class HomePage extends BasePage {
     return this.searchQueryBtn.find("#mat-input-0");
   }
 
+  static get itemCardList(){
+    return cy.get(".mat-grid-list");
+  }
+
   static findCardByItemName(text){
-    return cy.get(".mat-grid-list").find(".item-name").contains(text).parent();
+    return this.itemCardList.find(".item-name").contains(text).parent().parent().parent();
   }
 
   static get popUpDialogContainer(){
-    return cy.get('#mat-dialog-0');
+    return cy.get('.ng-trigger-dialogContainer');
+  }
+
+  static get closePopUpDialogBtn(){
+    return this.popUpDialogContainer.find('.close-dialog');
+  }
+
+  static get popUpDialogReviewDropdownBtn(){
+    return this.popUpDialogContainer.find('[aria-label="Expand for Reviews"]');
+  }
+
+  static get popUpDialogReviewDropdownList(){
+    return this.popUpDialogReviewDropdownBtn.find('.mat-expansion-panel-content');
+  }
+
+  static get popUpDialogReviewInput(){
+    return cy.get('[aria-label="Text field to review a product"]');
+  }
+
+  static get submitButton(){
+    return cy.get('#submitButton');
+  }
+
+  static get itemsPerPageDropdown(){
+    return cy.get('[aria-label="Items per page:"]');
+  }
+
+  static addItemToBasketBtn(text){
+    return this.findCardByItemName(text).find('[aria-label="Add to Basket"]');
+  }
+
+  static get navbarBasketBtn(){
+    return cy.get('[aria-label="Show the shopping cart"]');
   }
 }
 
