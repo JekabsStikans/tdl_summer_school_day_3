@@ -2,6 +2,8 @@ import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
 
+
+
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
     HomePage.visit();
@@ -11,33 +13,63 @@ describe("Juice-shop without auto login", () => {
 
   it("Login", () => {
     // Click Account button
+    HomePage.navbarAccountBtn.click();
     // Click Login button
+    HomePage.navbarLoginButton.click();
     // Set email value to "demo"
+    LoginPage.emailField.type("demo");
     // Set password value to "demo"
+    LoginPage.passwordField.type("demo");
     // Click Log in
+    LoginPage.loginButton.click();
     // Click Account button
+    HomePage.navbarAccountBtn.click();
     // Validate that "demo" account name appears in the menu section
+    HomePage.userAccountBtn.find(" > span").should("have.text", " demo ");
   });
+
 
   it("Registration", () => {
     // Click Account button
-    // Login button
+    HomePage.navbarAccountBtn.click();
+    // Click Login button
+    HomePage.navbarLoginButton.click();
     // Click "Not yet a customer?"
+    LoginPage.newCustomerLink.click();
+
     // Find - how to generate random number in JS
     // Use that number to genarate unique email address, e.g.: email_7584@ebox.com
     // Save that email address to some variable
+    const fakeEmail = "email_" + Math.trunc(Math.random()*100000).toString() + "@ebox.com";
+    const fakePassword = "NotPassword54321$";
+    // Fill in email field with the generated email
+    RegistrationPage.emailControlField.type(fakeEmail);
     // Fill in password field and repeat password field with same password
+    RegistrationPage.passwordControlField.type(fakePassword);
+    RegistrationPage.repeatPasswordControlField.type(fakePassword);
     // Click on Security Question menu
+    RegistrationPage.securityQuestionDropdownBtn.click();
     // Select  "Name of your favorite pet?"
+    RegistrationPage.securityQuestionDropdownList.contains("Name of your favorite pet?").click();
     // Fill in answer
+    RegistrationPage.securityAnswerControlField.type("Unreal");
     // Click Register button
+    RegistrationPage.registerButton.click();
+
     // Set email value to previously created email
+    LoginPage.emailField.type(fakeEmail);
     // Set password value to previously used password value
+    LoginPage.passwordField.type(fakePassword);
     // Click login button
+    LoginPage.loginButton.click();
     // Click Account button
+    HomePage.navbarAccountBtn.click();
     // Validate that account name (with previously created email address) appears in the menu section
+    HomePage.userAccountBtn.find(" > span").should("have.text", ' ' + fakeEmail + ' ');
   });
 });
+
+
 
 describe("Juice-shop with Auto login", () => {
   beforeEach(() => {
@@ -45,11 +77,15 @@ describe("Juice-shop with Auto login", () => {
     HomePage.visit();
   });
 
-  it("Search and validate Lemon", () => {
+  it.only("Search and validate Lemon", () => {
     // Click on search icon
+    HomePage.searchQueryBtn.click();
     // Search for Lemon
+    HomePage.searchQueryField.type("Lemon{enter}");
     // Select a product card - Lemon Juice (500ml)
+    HomePage.findCardByItemName("Lemon Juice (500ml)").click();
     // Validate that the card (should) contains "Sour but full of vitamins."
+    HomePage.popUpDialogContainer.contains("Sour but full of vitamins.").should("exist");
   });
 
   // Create scenario - Search 500ml and validate Lemon, while having multiple cards
