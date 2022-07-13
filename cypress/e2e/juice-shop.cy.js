@@ -270,7 +270,7 @@ describe("Juice-shop with Auto login", () => {
 
 
   // Create scenario - Add payment option
-  it("Search", () => {
+  it("Add a new payment option", () => {
     // Click on Account
     HomePage.navbarAccountBtn.click();
     // Click on Orders & Payment
