@@ -8,6 +8,7 @@ import OrderSummaryPage from "../pageObjects/OrderSummaryPage";
 import PaymentOptionsPage from "../pageObjects/PaymentOptionsPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
 import SavedAddressesPage from "../pageObjects/SavedAddressesPage";
+import SavedPaymentMethodsPage from "../pageObjects/SavedPaymentMethodsPage";
 import SelectAddressPage from "../pageObjects/SelectAddressPage";
 
 
@@ -237,7 +238,7 @@ describe("Juice-shop with Auto login", () => {
 
 
   // Create scenario - Add address
-  it.only("Add a new address", () => {
+  it("Add a new address", () => {
     // Click on Account
     HomePage.navbarAccountBtn.click();
     // Click on Orders & Payment
@@ -265,18 +266,29 @@ describe("Juice-shop with Auto login", () => {
   });
 
 
-  it("Search", () => {
   // Create scenario - Add payment option
-  // Click on Account
-  // Click on Orders & Payment
-  // Click on My payment options
-  // Create page object - SavedPaymentMethodsPage
-  // Click Add new card
-  // Fill in Name
-  // Fill in Card Number
-  // Set expiry month to 7
-  // Set expiry year to 2090
-  // Click Submit button
-  // Validate that the card shows up in the list
+  it("Search", () => {
+    // Click on Account
+    HomePage.navbarAccountBtn.click();
+    // Click on Orders & Payment
+    HomePage.ordersAndPaymentBtn.click();
+    // Click on My payment options
+    HomePage.myPaymentOptionsBtn.click();
+
+    // Create page object - SavedPaymentMethodsPage
+    // Click Add new card
+    SavedPaymentMethodsPage.addNewCardBtn.click();
+    // Fill in Name
+    SavedPaymentMethodsPage.nameInput.type("Demo");
+    // Fill in Card Number
+    SavedPaymentMethodsPage.cardNumberInput.type("4125 6785 9990 6578");
+    // Set expiry month to 7
+    SavedPaymentMethodsPage.expiryMonthInput.select("7");
+    // Set expiry year to 2090
+    SavedPaymentMethodsPage.expiryYearInput.select("2090");
+    // Click Submit button
+    SavedPaymentMethodsPage.submitButton.click();
+    // Validate that the card shows up in the list
+    SavedPaymentMethodsPage.paymentOptionsList.contains("Demo").should("exist");
   });
 });
